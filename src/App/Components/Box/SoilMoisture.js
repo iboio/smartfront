@@ -1,4 +1,5 @@
 import {Box, Grid, Paper} from "@mui/material";
+import Typography from "@mui/material/Typography";
 import * as React from "react";
 import OpacityIcon from "@mui/icons-material/Opacity";
 

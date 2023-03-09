@@ -3,8 +3,6 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-
-
 export default function LoginPage() {
     return (
         <Grid
