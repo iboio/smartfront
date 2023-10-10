@@ -5,6 +5,7 @@ import Title from "./Title";
 import Button from "@mui/material/Button";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
+import service from "../../../../Services/Api";
 
 export default function Body(props) {
     const navigator = useNavigate()
@@ -23,7 +24,7 @@ export default function Body(props) {
                     </Grid>
                     <Grid item xs={12}>Custom</Grid>
                     <Grid item xs={12}>
-                        <Button variant="outlined" onClick={() => navigator(`room/${props.name.toLowerCase()}`)} sx={{marginTop: 2}}>
+                        <Button variant="outlined" onClick={() => navigator(`${props.room_id}/${props.type.toLowerCase()}`)} sx={{marginTop: 2}}>
                             Outlined
                         </Button>
                     </Grid>
