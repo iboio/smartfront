@@ -1,5 +1,5 @@
 import {Grid} from "@mui/material";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import * as React from "react";
 import {useEffect} from "react";
 import service from "../../Services/Api";
@@ -16,14 +16,24 @@ import {
 import {Line} from 'react-chartjs-2';
 
 export default function SensorDetailsPage(props) {
+    const location = useLocation()
+    const chartData = location.state?.data.state
     const param = useParams()
-    const [state, setState] = React.useState([]);
+    const [state, setState] = React.useState([
+        {
+            value: '',
+            labels: '',
+        }
+    ]);
     useEffect(() => {
         const interval = setInterval(() => {
-            service.roomSensorData(param.name, param.sensor).then(data => setState(data));
+            service.roomSensorData(param.userId,param.roomId, param.sensor).then(data => {
+                setState(data);
+            });
         }, 5000);
         return () => clearInterval(interval);
-    }, [param.name,param.sensor]);
+    }, [param.sensor,param.roomId,param.userId]);
+
     ChartJS.register(
         CategoryScale,
         LinearScale,
@@ -33,13 +43,12 @@ export default function SensorDetailsPage(props) {
         Tooltip,
         Legend
     );
-
     const options = {
         responsive: true,
         plugins: {
             title: {
                 display: true,
-                text: `${param.name},${param.sensor}`,
+                text: `${chartData.roomName},${chartData.sensorName}`,
             },
         },
         colors: ['#FB7A21']
@@ -51,7 +60,7 @@ export default function SensorDetailsPage(props) {
         datasets: [
             {
                 label: param.sensor,
-                data: state.values,
+                data: state.value,
                 // you can set indiviual colors for each bar
                 backgroundColor: [
                     'rgba(255, 99, 71, 0.5)',

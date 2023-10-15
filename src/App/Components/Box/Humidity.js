@@ -25,7 +25,7 @@ export default function Humidity(props) {
                                     <Typography padding={1} variant={"h5"}>{props.title}</Typography>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Typography variant={"h4"}>+{props.data} %</Typography>
+                                    <Typography variant={"h4"}>+{props.value} %</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>

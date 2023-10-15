@@ -4,11 +4,18 @@ import Humidity from "../../Box/Humidity";
 import Title from "./Title";
 import Button from "@mui/material/Button";
 import * as React from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link, useLocation} from "react-router-dom";
 import service from "../../../../Services/Api";
+import SoilMoisture from "../../Box/SoilMoisture";
+import cardChecker from "../../../../Services/CardChecker";
 
-export default function Body(props) {
-    const navigator = useNavigate()
+export default function CardBody(props) {
+    const { state } = useLocation();
+    const navigator = useNavigate();
+    const navigateData= {
+        roomType: props.type,
+        roomName: props.name
+    }
     return (
         <Paper>
             <Box>
@@ -18,15 +25,16 @@ export default function Body(props) {
                     </Grid>
                     <Grid item xs={12}>
                         <Grid container>
-                            <Temperature title={"Temperature"} data={props.temperature}></Temperature>
-                            <Humidity title={"Humidity"} data={props.humidity}></Humidity>
+                            {cardChecker.CardChecker(props.selectedCard,props.sensors,props.sensorConfig)}
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>Custom</Grid>
                     <Grid item xs={12}>
-                        <Button variant="outlined" onClick={() => navigator(`${props.room_id}/${props.type.toLowerCase()}`)} sx={{marginTop: 2}}>
-                            Outlined
-                        </Button>
+                        <Link to={`${props.room_id}/${props.type}`} state={{roomData: navigateData}}>
+                            <Button variant="outlined" sx={{marginTop: 2}}>
+                                Outlined
+                            </Button>
+                        </Link>
                     </Grid>
                 </Grid>
             </Box>

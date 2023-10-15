@@ -7,11 +7,11 @@ import SensorDetailsPage from "./Views/SensorDetailsPage";
 export default function Router (props) {
     return (
         <Routes>
-            <Route path={"/login"} element={<Login/>} />
+            <Route path={"/login"} element={<Login/>}/>
             <Route path={"/register"} element={<Register/>} />
-            <Route path={"/"} element={<HomePage/>} />
-            <Route path={`room/:name`} element={<RoomDetailsPage/>}/>
-            <Route path={'room/:name/:sensor'} element={<SensorDetailsPage/>}></Route>
+            <Route path={"/:userId"} element={<HomePage/>} />
+            <Route path={`:userId/:roomId/:name`} element={<RoomDetailsPage/>}/>
+            <Route path={':userId/:roomId/:name/:sensor'} element={<SensorDetailsPage/>}></Route>
         </Routes>
     )
 }

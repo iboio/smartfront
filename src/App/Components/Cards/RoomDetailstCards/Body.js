@@ -1,12 +1,25 @@
 import {Box, Grid, Paper} from "@mui/material";
 import Button from "@mui/material/Button";
 import * as React from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link, useLocation} from "react-router-dom";
 import Temperature from "../../Box/Temperature.js";
 import Humidity from "../../Box/Humidity";
 import SoilMoisture from "../../Box/SoilMoisture";
+import CardChecker from "../../../../Services/CardChecker";
 
 export default function Body(props) {
+    let {state} = useLocation();
+    let location = useLocation();
+    const navigateData = {
+        pathname: `${props.type}`,
+        state: {
+            sensorName: props.sensor,
+            sensorType: props.type,
+            roomName: location.state.roomData.roomName
+        }
+    }
+
+
     const navigator = useNavigate()
     return (
         <Paper>
@@ -15,20 +28,17 @@ export default function Body(props) {
                     <Grid item xs={12}>
                         <Grid container spacing={4}>
                             <Grid item xs={12}>
-                                {props.sensor === 'temperature' &&
-                                        <Temperature title={props.sensor} data={props.data}></Temperature>}
-                                {props.sensor === 'humidity' &&
-                                    <Humidity title={props.sensor} data={props.data}></Humidity>}
-                                {props.sensor === 'soil' &&
-                                    <SoilMoisture title={props.sensor} data={props.data}></SoilMoisture>}
+                                {CardChecker.RoomDetailsCardChecker(props.type,props.name,props.value)}
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant="outlined" onClick={() => navigator(`${props.sensor.toLowerCase()}`)}
-                                sx={{marginTop: 2}}>
-                            Outlined
-                        </Button>
+                        <Link to={`${props.type}`} state={{data: navigateData}}>
+                            <Button variant="outlined"
+                                    sx={{marginTop: 2}}>
+                                Outlined
+                            </Button>
+                        </Link>
                     </Grid>
                 </Grid>
             </Box>
